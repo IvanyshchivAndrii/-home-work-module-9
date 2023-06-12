@@ -1,11 +1,19 @@
-PHONEB00K = {}
-
-
-def add_contact():
+def get_contacts():
+    phone_book = {}
     with open('phonebook.txt', 'r') as fd:
         for user in fd:
             users = user.split()
-            PHONEB00K[users[0]] = users[1]
+            phone_book[users[0]] = users[1]
+    return phone_book
+
+
+def set_contacts(contact_dict: dict):
+    with open('phonebook.txt', 'w') as fd:
+        for k, v in contact_dict.items():
+            fd.write(f'{k} {v}\n')
+
+
+PHONEB00K = get_contacts()
 
 
 def input_error(func):
@@ -21,10 +29,19 @@ def input_error(func):
                 return func(*args)
         except KeyError:
             print('Enter existing or correct username')
-        # except IndexError as e:
-        #     print(e)
+        except IndexError as e:
+            print(e)
 
     return inner
+
+
+def helper(*args):
+    print('hello - print "say hello',
+          'add - adding Name and Phone. You have to enter Name and Phone through a space',
+          'change - changing Phone of user Name. You have to enter user nave and new Phone through a space',
+          'phone - showing Phone of user. You have to enter username',
+          'show all - showing all contacts', sep='\n')
+    return ''
 
 
 def say_hallo(*args):
@@ -66,7 +83,8 @@ OPERATIONS = {
     'add': add_contact,
     'change': change_contact,
     'phone': show_phone,
-    'show all': show_all_contacts
+    'show all': show_all_contacts,
+    'help': helper
 }
 
 
@@ -88,6 +106,8 @@ def main():
             flag = False
         else:
             print('Please, write one of the command')
+    set_contacts(PHONEB00K)
+
 
 if __name__ == '__main__':
     main()
