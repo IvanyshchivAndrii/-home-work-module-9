@@ -52,13 +52,16 @@ def say_hallo(*args):
 @input_error
 def add_contact(*args):
     PHONEB00K[args[1].title()] = args[2]
+    print(f'Contact {args[1].title()} {args[2]} has been added.')
     return ''
 
 
 @input_error
 def change_contact(*args):
     if args[1].title() in list(PHONEB00K):
+        old_num = PHONEB00K[args[1].title()]
         PHONEB00K[args[1].title()] = args[2]
+        print(f'Phone of {args[1].title()} - {old_num} has been changed on {args[2]}')
     else:
         print(f'There is no {args[1]} in phonebook!')
     return ''
